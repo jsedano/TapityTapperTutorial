@@ -487,6 +487,7 @@
 				6BA715E3190222CA0059289E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		6BA715E4190222CA0059289E /* Build configuration list for PBXNativeTarget "Tapity TapperTests" */ = {
 			isa = XCConfigurationList;
@@ -495,6 +496,7 @@
 				6BA715E6190222CA0059289E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
