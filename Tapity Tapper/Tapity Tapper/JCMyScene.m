@@ -47,11 +47,40 @@
         self.rectangle.physicsBody.mass = 0.5f;
         //adding the node to the scene
         [self addChild:self.rectangle];
+        SKAction *callAddObstacles = [SKAction performSelector:@selector(addObstacles) onTarget:self];
+        SKAction *wait = [SKAction waitForDuration:1.5];
+        SKAction *waitThenAdd = [SKAction sequence:@[callAddObstacles,wait]];
+        SKAction *obstacleLoop = [SKAction repeatActionForever:waitThenAdd];
+        [self.rectangle runAction:obstacleLoop];
     }
     else{
         [self.rectangle.physicsBody applyImpulse:CGVectorMake(0.0f, 250.0f)];
     }
     
+}
+
+-(void)addObstacles{
+    float obstacleWidth = 50.0f;
+    
+    SKSpriteNode *upperObstacle = [SKSpriteNode spriteNodeWithColor:[UIColor greenColor] size:CGSizeMake(obstacleWidth, self.size.height/2-100)];
+    
+    SKSpriteNode *lowerObstacle = [SKSpriteNode spriteNodeWithColor:[UIColor greenColor] size:CGSizeMake(obstacleWidth, self.size.height/2-100)];
+    
+    upperObstacle.position = CGPointMake(self.size.width+obstacleWidth/2, self.size.height-upperObstacle.size.height/2);
+    
+    lowerObstacle.position = CGPointMake(self.size.width+obstacleWidth/2, lowerObstacle.size.height/2);
+    
+    
+    SKAction *moveObstacle = [SKAction moveToX:-obstacleWidth/2 duration:2.0];
+    
+    [upperObstacle runAction:moveObstacle completion:^(void){
+        [upperObstacle removeFromParent];
+    }];
+    [lowerObstacle runAction:moveObstacle completion:^(void){
+        [lowerObstacle removeFromParent];
+    }];
+    [self addChild:upperObstacle];
+    [self addChild:lowerObstacle];
 }
 
 -(void)update:(CFTimeInterval)currentTime {
