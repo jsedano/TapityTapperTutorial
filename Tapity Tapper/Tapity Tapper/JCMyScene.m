@@ -8,9 +8,13 @@
 
 #import "JCMyScene.h"
 
-@interface JCMyScene(){}
+@interface JCMyScene() <SKPhysicsContactDelegate>{}
 
 @property SKSpriteNode *rectangle;
+typedef enum : uint8_t {
+    JCColliderTypeRectangle = 1,
+    JCColliderTypeObstacle  = 2
+} JCColliderType;
 
 @end
 
@@ -25,6 +29,8 @@
         self.backgroundColor = [SKColor colorWithRed:0.15 green:0.15 blue:0.3 alpha:1.0];
         
         self.physicsBody = [SKPhysicsBody bodyWithEdgeLoopFromRect:CGRectMake(0, 0, self.size.width, self.size.height)];
+    
+        self.physicsWorld.contactDelegate = self;
     }
     return self;
 }
@@ -45,6 +51,10 @@
         //gravity is going to be simulated on this node
         self.rectangle.physicsBody.affectedByGravity = YES;
         self.rectangle.physicsBody.mass = 0.5f;
+        //collision detection
+        self.rectangle.physicsBody.categoryBitMask = JCColliderTypeRectangle;
+        self.rectangle.physicsBody.collisionBitMask = JCColliderTypeObstacle | JCColliderTypeRectangle;
+        self.rectangle.physicsBody.contactTestBitMask = JCColliderTypeObstacle;
         //adding the node to the scene
         [self addChild:self.rectangle];
         SKAction *callAddObstacles = [SKAction performSelector:@selector(addObstacles) onTarget:self];
@@ -79,12 +89,30 @@
     [lowerObstacle runAction:moveObstacle completion:^(void){
         [lowerObstacle removeFromParent];
     }];
+    
+    //collision detection
+    upperObstacle.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:upperObstacle.size];
+    //we don't want this object to be animated by the physics engine
+    upperObstacle.physicsBody.dynamic = NO;
+    upperObstacle.physicsBody.categoryBitMask = JCColliderTypeObstacle;
+    //same with the lower obstacle
+    lowerObstacle.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:lowerObstacle.size];
+    lowerObstacle.physicsBody.dynamic = NO;
+    lowerObstacle.physicsBody.categoryBitMask = JCColliderTypeObstacle;
     [self addChild:upperObstacle];
     [self addChild:lowerObstacle];
 }
 
 -(void)update:(CFTimeInterval)currentTime {
     /* Called before each frame is rendered */
+}
+
+-(void)didBeginContact:(SKPhysicsContact *)contact{
+    
+    if ((contact.bodyA.categoryBitMask == JCColliderTypeRectangle && contact.bodyB.categoryBitMask == JCColliderTypeObstacle) || (contact.bodyB.categoryBitMask == JCColliderTypeRectangle && contact.bodyA.categoryBitMask == JCColliderTypeObstacle)) {
+        self.paused = YES;
+    }
+
 }
 
 @end
