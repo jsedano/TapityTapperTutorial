@@ -26,7 +26,6 @@ typedef enum : uint8_t {
 @implementation JCMyScene
 
 
-
 -(id)initWithSize:(CGSize)size {    
     if (self = [super initWithSize:size]) {
         /* Setup your scene here */
