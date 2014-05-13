@@ -7,7 +7,7 @@
 //
 #import "JCMyScene.h"
 #import "JCCell.h"
-
+#import "JCPoint.h"
 @interface JCMyScene ()
 
 @property NSInteger counter;
@@ -16,6 +16,7 @@
 @property NSArray *directions;
 @property CGFloat tileZeroFactor;
 @property NSThread *mazeThread;
+
 @end
 
 
@@ -42,97 +43,101 @@
     switch (self.counter) {
         case 0:
             for (int i=0; i<10; i++) {
+                NSArray *mazeRow = [[NSArray alloc] init];
                 for (int j=0; j<10; j++) {
-                    JCCell *cell = [[JCCell alloc] initCellWithSize:CGSizeMake(self.sizeOfCell, self.sizeOfCell) indexX:j andIndexY:i];
+                    JCCell *cell = [[JCCell alloc] initCellWithSize:CGSizeMake(self.sizeOfCell, self.sizeOfCell)];
                     
                     cell.position = CGPointMake(self.size.width/2+self.tileZeroFactor+j*self.sizeOfCell,self.size.height/2+self.tileZeroFactor+i*self.sizeOfCell);;
                     
                     [self addChild:cell];
-                    self.maze = [self.maze arrayByAddingObject:cell];
+                    //self.maze = [self.maze arrayByAddingObject:cell];
+                    mazeRow = [mazeRow arrayByAddingObject:cell];
                 }
+                self.maze =[self.maze arrayByAddingObject:mazeRow];
             }
             break;
         case 1:
-            [[self getCellX:0 Y:0] changeFillColor:[UIColor yellowColor]];
-            self.mazeThread = [[NSThread alloc]  initWithTarget:self selector:@selector(carvePassagesFrom:) object:[self getCellX:0 Y:0]];
+            [[self getCellInPoint:[JCPoint initPointWithX:0 andY:0]] changeFillColor:[UIColor redColor]];
+            self.mazeThread = [[NSThread alloc]  initWithTarget:self selector:@selector(carverHelper:) object:[NSArray arrayWithObjects:[self getCellInPoint:[JCPoint initPointWithX:0 andY:0]],[JCPoint initPointWithX:0 andY:0], nil]];
             [self.mazeThread start];
             break;
-        case 2:
-            [self removeAllChildren];
-            self.maze = [[NSArray alloc] init];
-            self.counter = -1;
-            break;
         default:
-            self.counter = -1;
             break;
     }
-    
+    if (self.mazeThread!=nil && self.mazeThread.isFinished) {
+        [self removeAllChildren];
+        self.maze = [[NSArray alloc] init];
+        self.counter  = -1;
+        self.mazeThread = nil;
+    }
     self.counter++;
     
 }
 
--(void)carvePassagesFrom:(JCCell *)currentCell{
+-(void)carverHelper:(NSArray *)cellAndPoint{
+    [self carvePassagesFrom:[cellAndPoint objectAtIndex:0] inPoint:[cellAndPoint objectAtIndex:1]];
+}
+
+
+
+-(void)carvePassagesFrom:(JCCell *)currentCell inPoint:(JCPoint *)point{
     currentCell.visited = YES;
-    [self shuffle];//we sort the list of directions
+    [currentCell changeFillColor:[UIColor lightGrayColor]];
+    NSArray *directions = [self shuffle];
     for (int i = 0; i<self.directions.count; i++) {
         JCCell *nextCell = nil;
+        JCPoint *nextPoint = nil;
         NSInteger oppositeDirection = 0;
-        NSNumber *direction = [self.directions objectAtIndex:i];
+        NSNumber *direction = [directions objectAtIndex:i];
         switch (direction.intValue) {
             case LEFTWALL:
-                if (currentCell.indexX-1 >= 0) {
-                    nextCell = [self getCellX:currentCell.indexX-1 Y:currentCell.indexY];
+                if (point.x-1 >= 0) {
+                    nextPoint = [JCPoint initPointWithX:point.x-1 andY:point.y];
                     oppositeDirection = RIGHTWALL;
                 }
                 break;
             case RIGHTWALL:
-                if (currentCell.indexX+1 < 10) {
-                    nextCell = [self getCellX:currentCell.indexX+1 Y:currentCell.indexY];
+                if (point.x+1 < 10) {
+                    nextPoint = [JCPoint initPointWithX:point.x+1 andY:point.y];
                     oppositeDirection = LEFTWALL;
                 }
                 break;
             case FRONTWALL:
-                if (currentCell.indexY+1 < 10) {
-                    nextCell = [self getCellX:currentCell.indexX Y:currentCell.indexY+1];
+                if (point.y+1 < 10) {
+                    nextPoint = [JCPoint initPointWithX:point.x andY:point.y+1];
                     oppositeDirection = BACKWALL;
                 }
                 break;
             case BACKWALL:
-                if (currentCell.indexY-1 >= 0) {
-                    nextCell = [self getCellX:currentCell.indexX Y:currentCell.indexY-1];
+                if (point.y-1 >= 0) {
+                    nextPoint = [JCPoint initPointWithX:point.x andY:point.y-1];
                     oppositeDirection = FRONTWALL;
                 }
                 break;
             default:
                 break;
         }
-        if (nextCell) {
+        if (nextPoint) {
+            nextCell = [self getCellInPoint:nextPoint];
             if (!nextCell.visited) {
                 nextCell.visited = YES;
                 [currentCell removeWall:direction.intValue];
                 [nextCell removeWall:oppositeDirection];
-                [nextCell changeFillColor:[UIColor yellowColor]];
+                [nextCell changeFillColor:[UIColor redColor]];
                 [NSThread sleepForTimeInterval:0.1];
-                [self carvePassagesFrom:nextCell];
-                
+                [self carvePassagesFrom:nextCell inPoint:nextPoint];
             }
         }
+        
+
     }
-    
-    
-    
 }
 
--(JCCell *)getCellX:(NSInteger)x Y:(NSInteger)y{
-    for (JCCell *cell in self.maze) {
-        if (cell.indexX==x&&cell.indexY==y) {
-            return cell;
-        }
-    }
-    return nil;
+-(JCCell *)getCellInPoint:(JCPoint*)point{
+    return [[self.maze objectAtIndex:point.y] objectAtIndex:point.x];
 }
 
-- (void)shuffle
+- (NSArray *)shuffle
 {
     NSMutableArray *tempArray = [NSMutableArray arrayWithArray:self.directions];
     NSUInteger count = [self.directions count];
@@ -142,7 +147,7 @@
         NSInteger n = arc4random_uniform(nElements) + i;
         [tempArray exchangeObjectAtIndex:i withObjectAtIndex:n];
     }
-    self.directions = [[NSArray alloc] initWithArray:tempArray];
+    return [[NSArray alloc] initWithArray:tempArray];
 }
 
 -(void)update:(CFTimeInterval)currentTime {

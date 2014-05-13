@@ -7,7 +7,6 @@
 //
 
 #import "JCCell.h"
-
 @interface JCCell()
 
 @property BOOL leftWall;
@@ -22,27 +21,24 @@
 @end
 
 @implementation JCCell
--(id)initCellWithSize:(CGSize)size indexX:(NSInteger)indexX andIndexY:(NSInteger)indexY{
+-(id)initCellWithSize:(CGSize)size{
     if (self=[super init]) {
-        self.indexX = indexX;
-        self.indexY = indexY;
+        int cellthikness = 3;
         self.visited = NO;
-        self.fill = [SKSpriteNode spriteNodeWithColor:[UIColor lightGrayColor] size:size];
-        
-        
+        self.fill = [SKSpriteNode spriteNodeWithColor:[UIColor grayColor] size:size];
         
         self.leftWallNode = [[SKShapeNode alloc]init];
         CGMutablePathRef leftWallPath = CGPathCreateMutable();
         CGPathAddRect(leftWallPath, NULL, CGRectMake(self.position.x-size.width/2, self.position.y-size.height/2, 3, size.height));
         self.leftWallNode.fillColor =  [UIColor blackColor];
-        self.leftWallNode.lineWidth=0;
+        self.leftWallNode.lineWidth= 0;
         [[self leftWallNode] setPath:leftWallPath];
         CGPathRelease(leftWallPath);
         
         
         self.rightWallNode = [[SKShapeNode alloc]init];
         CGMutablePathRef rightWallPath = CGPathCreateMutable();
-        CGPathAddRect(rightWallPath, NULL, CGRectMake(self.position.x+size.width/2, self.position.y-size.height/2, 3, size.height));
+        CGPathAddRect(rightWallPath, NULL, CGRectMake(self.position.x+size.width/2-cellthikness, self.position.y-size.height/2, 3, size.height));
         self.rightWallNode.fillColor =  [UIColor blackColor];
         self.rightWallNode.lineWidth=0;
         [[self rightWallNode] setPath:rightWallPath];
@@ -50,7 +46,7 @@
         
         self.frontWallNode = [[SKShapeNode alloc]init];
         CGMutablePathRef frontWallPath = CGPathCreateMutable();
-        CGPathAddRect(frontWallPath, NULL, CGRectMake(self.position.x-size.width/2, self.position.y+size.height/2, size.width, 3));
+        CGPathAddRect(frontWallPath, NULL, CGRectMake(self.position.x-size.width/2, self.position.y+size.height/2-cellthikness, size.width, 3));
         self.frontWallNode.fillColor =  [UIColor blackColor];
         self.frontWallNode.lineWidth=0;
         [[self frontWallNode] setPath:frontWallPath];

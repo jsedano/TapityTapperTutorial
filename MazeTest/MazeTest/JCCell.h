@@ -16,15 +16,13 @@ typedef NS_ENUM(NSUInteger, JCWallType) {
     FRONTWALL,
     BACKWALL
 };
-@property (readonly) BOOL leftWall;
-@property (readonly) BOOL rightWall;
-@property (readonly) BOOL frontWall;
-@property (readonly) BOOL backWall;
-@property BOOL visited;
-@property NSInteger indexX;
-@property NSInteger indexY;
 
--(id)initCellWithSize:(CGSize)size indexX:(NSInteger)indexX andIndexY:(NSInteger)indexY;
+@property BOOL visited;
+
+-(id)initCellWithSize:(CGSize)size;
+
+
+
 -(void)removeWall:(NSInteger)wall;
 -(void)changeFillColor:(UIColor *)color;
 @end

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6B4D254C1921D3BA0042AB2C /* JCPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B4D254B1921D3BA0042AB2C /* JCPoint.m */; };
 		6B8228B11920450200E66DD3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B8228B01920450200E66DD3 /* Foundation.framework */; };
 		6B8228B31920450200E66DD3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B8228B21920450200E66DD3 /* CoreGraphics.framework */; };
 		6B8228B51920450200E66DD3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B8228B41920450200E66DD3 /* UIKit.framework */; };
@@ -39,6 +40,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6B4D254A1921D3BA0042AB2C /* JCPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCPoint.h; sourceTree = "<group>"; };
+		6B4D254B1921D3BA0042AB2C /* JCPoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPoint.m; sourceTree = "<group>"; };
 		6B8228AD1920450200E66DD3 /* MazeTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MazeTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6B8228B01920450200E66DD3 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		6B8228B21920450200E66DD3 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -139,6 +142,8 @@
 				6B8228B91920450200E66DD3 /* Supporting Files */,
 				6B8228EF1920458000E66DD3 /* JCCell.h */,
 				6B8228F01920458000E66DD3 /* JCCell.m */,
+				6B4D254A1921D3BA0042AB2C /* JCPoint.h */,
+				6B4D254B1921D3BA0042AB2C /* JCPoint.m */,
 			);
 			path = MazeTest;
 			sourceTree = "<group>";
@@ -277,6 +282,7 @@
 				6B8228C31920450200E66DD3 /* JCAppDelegate.m in Sources */,
 				6B8228F11920458000E66DD3 /* JCCell.m in Sources */,
 				6B8228CF1920450200E66DD3 /* JCMyScene.m in Sources */,
+				6B4D254C1921D3BA0042AB2C /* JCPoint.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -493,6 +499,7 @@
 				6B8228EB1920450300E66DD3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		6B8228EC1920450300E66DD3 /* Build configuration list for PBXNativeTarget "MazeTestTests" */ = {
 			isa = XCConfigurationList;
@@ -501,6 +508,7 @@
 				6B8228EE1920450300E66DD3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
