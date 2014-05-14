@@ -25,6 +25,7 @@ typedef NS_ENUM(NSUInteger, JCWallType) {
 
 -(void)removeWall:(NSInteger)wall;
 -(void)changeFillColor:(UIColor *)color;
+
 @end
 
 

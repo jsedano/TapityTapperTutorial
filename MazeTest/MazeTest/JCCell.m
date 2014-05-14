@@ -95,6 +95,8 @@
     
 }
 
+
+
 -(void)changeFillColor:(UIColor *)color{
     self.fill.color = color;
 }

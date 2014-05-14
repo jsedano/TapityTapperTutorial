@@ -7,7 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6B33240A1923292200768011 /* JCJoystick.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B3324071923292200768011 /* JCJoystick.m */; };
+		6B33240B1923292200768011 /* JCImageJoystick.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B3324091923292200768011 /* JCImageJoystick.m */; };
 		6B4D254C1921D3BA0042AB2C /* JCPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B4D254B1921D3BA0042AB2C /* JCPoint.m */; };
+		6B6E6797192321EB00505580 /* JCMaze.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B6E6796192321EB00505580 /* JCMaze.m */; };
 		6B8228B11920450200E66DD3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B8228B01920450200E66DD3 /* Foundation.framework */; };
 		6B8228B31920450200E66DD3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B8228B21920450200E66DD3 /* CoreGraphics.framework */; };
 		6B8228B51920450200E66DD3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B8228B41920450200E66DD3 /* UIKit.framework */; };
@@ -40,8 +43,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6B3324061923292200768011 /* JCJoystick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCJoystick.h; sourceTree = "<group>"; };
+		6B3324071923292200768011 /* JCJoystick.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCJoystick.m; sourceTree = "<group>"; };
+		6B3324081923292200768011 /* JCImageJoystick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCImageJoystick.h; sourceTree = "<group>"; };
+		6B3324091923292200768011 /* JCImageJoystick.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCImageJoystick.m; sourceTree = "<group>"; };
 		6B4D254A1921D3BA0042AB2C /* JCPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCPoint.h; sourceTree = "<group>"; };
 		6B4D254B1921D3BA0042AB2C /* JCPoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPoint.m; sourceTree = "<group>"; };
+		6B6E6795192321EB00505580 /* JCMaze.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JCMaze.h; path = ../JCMaze.h; sourceTree = "<group>"; };
+		6B6E6796192321EB00505580 /* JCMaze.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JCMaze.m; path = ../JCMaze.m; sourceTree = "<group>"; };
 		6B8228AD1920450200E66DD3 /* MazeTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MazeTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6B8228B01920450200E66DD3 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		6B8228B21920450200E66DD3 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -144,6 +153,12 @@
 				6B8228F01920458000E66DD3 /* JCCell.m */,
 				6B4D254A1921D3BA0042AB2C /* JCPoint.h */,
 				6B4D254B1921D3BA0042AB2C /* JCPoint.m */,
+				6B6E6795192321EB00505580 /* JCMaze.h */,
+				6B6E6796192321EB00505580 /* JCMaze.m */,
+				6B3324061923292200768011 /* JCJoystick.h */,
+				6B3324071923292200768011 /* JCJoystick.m */,
+				6B3324081923292200768011 /* JCImageJoystick.h */,
+				6B3324091923292200768011 /* JCImageJoystick.m */,
 			);
 			path = MazeTest;
 			sourceTree = "<group>";
@@ -277,9 +292,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6B33240B1923292200768011 /* JCImageJoystick.m in Sources */,
 				6B8228BF1920450200E66DD3 /* main.m in Sources */,
 				6B8228CC1920450200E66DD3 /* JCViewController.m in Sources */,
 				6B8228C31920450200E66DD3 /* JCAppDelegate.m in Sources */,
+				6B6E6797192321EB00505580 /* JCMaze.m in Sources */,
+				6B33240A1923292200768011 /* JCJoystick.m in Sources */,
 				6B8228F11920458000E66DD3 /* JCCell.m in Sources */,
 				6B8228CF1920450200E66DD3 /* JCMyScene.m in Sources */,
 				6B4D254C1921D3BA0042AB2C /* JCPoint.m in Sources */,
