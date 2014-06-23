@@ -9,5 +9,8 @@
 #import <SpriteKit/SpriteKit.h>
 
 @interface JCMyScene : SKScene
-
++ (id)initSharedManagerWithSize:(CGSize)size;
++ (id)sharedManager;
+- (void)pauseGame;
 @end
+static JCMyScene *sharedMyManager;

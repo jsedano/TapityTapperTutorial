@@ -15,7 +15,8 @@
 @property BOOL gameOver;
 @property UIAlertView *gameOverAlert;
 @property SKLabelNode *startGameLabel;
-
+@property SKLabelNode *continueGameLabel;
+@property SKLabelNode *scoreLabel;
 typedef enum : uint8_t {
     JCColliderTypeRectangle = 1,
     JCColliderTypeObstacle  = 2
@@ -25,6 +26,16 @@ typedef enum : uint8_t {
 
 @implementation JCMyScene
 
++ (id)initSharedManagerWithSize:(CGSize)size{
+    @synchronized(self) {
+        if (sharedMyManager == nil)
+            sharedMyManager = [[self alloc] initWithSize:size];
+    }
+    return sharedMyManager;
+}
++ (id)sharedManager{
+    return sharedMyManager;
+}
 
 -(id)initWithSize:(CGSize)size {    
     if (self = [super initWithSize:size]) {
@@ -48,14 +59,27 @@ typedef enum : uint8_t {
         
         self.startGameLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
         self.startGameLabel.text = @"Tap to play";
-        self.startGameLabel.fontSize = 15;
+        self.startGameLabel.fontSize = self.size.height/25;
         self.startGameLabel.position = CGPointMake(size.width/2, size.height/2);
+        
+        self.scoreLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
+        self.scoreLabel.text = @"0";
+        self.scoreLabel.fontSize = self.size.height/25;
+        self.scoreLabel.position = CGPointMake(size.width/2, size.height-self.scoreLabel.frame.size.height*2);
+        
+
+        self.continueGameLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
+        self.continueGameLabel.text = @"PAUSED tap to continue";
+        self.continueGameLabel.fontSize = self.size.height/20;
+        self.continueGameLabel.position = CGPointMake(size.width/2, size.height/2);
         
         self.gameOver = NO;
         
-        self.rectangle = [SKSpriteNode spriteNodeWithColor:[UIColor redColor] size:CGSizeMake(50, 50)];
+        self.rectangle = [SKSpriteNode spriteNodeWithColor:[UIColor redColor] size:CGSizeMake(self.size.height/10, self.size.height/10)];
         [self setRectanglePositionAndAddToScene];
         [self addChild:self.startGameLabel];
+        [self addChild:self.scoreLabel];
+
     }
     return self;
 }
@@ -80,6 +104,8 @@ typedef enum : uint8_t {
             [self removeAllChildren];
             self.paused = NO;
             self.gameOver = NO;
+            self.scoreLabel.text = @"0";
+            [self addChild:self.scoreLabel];
             [self setRectanglePositionAndAddToScene];
         }
         [self.rectangle runAction:self.obstacleLoop withKey:@"obstacles"];
@@ -91,11 +117,18 @@ typedef enum : uint8_t {
 }
 
 -(void)addObstacles{
-    float obstacleWidth = 50.0f;
+    float obstacleWidth = self.size.height/10.0;
+    float gap = (self.size.height/10.0)*4;
+    float minHeight = self.size.height/10.0;
+    float changeableSpace = self.size.height - gap - minHeight*2;
+    float pieceOfChangeableSpace = changeableSpace / 8 ;
+    float randomValue = arc4random()%(9);
+    float upperObstacleHeight =minHeight + randomValue*pieceOfChangeableSpace;
+    float lowerObstacleHeight =minHeight + (8-randomValue)*pieceOfChangeableSpace;
     
-    SKSpriteNode *upperObstacle = [SKSpriteNode spriteNodeWithColor:[UIColor greenColor] size:CGSizeMake(obstacleWidth, self.size.height/2-100)];
+    SKSpriteNode *upperObstacle = [SKSpriteNode spriteNodeWithColor:[UIColor greenColor] size:CGSizeMake(obstacleWidth, upperObstacleHeight)];
     
-    SKSpriteNode *lowerObstacle = [SKSpriteNode spriteNodeWithColor:[UIColor greenColor] size:CGSizeMake(obstacleWidth, self.size.height/2-100)];
+    SKSpriteNode *lowerObstacle = [SKSpriteNode spriteNodeWithColor:[UIColor greenColor] size:CGSizeMake(obstacleWidth, lowerObstacleHeight)];
     
     upperObstacle.position = CGPointMake(self.size.width+obstacleWidth/2, self.size.height-upperObstacle.size.height/2);
     
@@ -105,6 +138,7 @@ typedef enum : uint8_t {
     SKAction *moveObstacle = [SKAction moveToX:-obstacleWidth/2 duration:2.0];
     
     [upperObstacle runAction:moveObstacle completion:^(void){
+        self.scoreLabel.text =[NSString stringWithFormat:@"%d", [self.scoreLabel.text integerValue]+1];
         [upperObstacle removeFromParent];
     }];
     [lowerObstacle runAction:moveObstacle completion:^(void){
@@ -141,8 +175,14 @@ typedef enum : uint8_t {
 }
 
 -(void)setRectanglePositionAndAddToScene{
-    self.rectangle.position = CGPointMake(60, self.size.height/2);
+    self.rectangle.position = CGPointMake(self.size.width/6, self.size.height/2);
     [self addChild:self.rectangle];
+}
+
+-(void)pauseGame{
+    sharedMyManager.paused = YES;
+    [sharedMyManager addChild:sharedMyManager.continueGameLabel];
+
 }
 
 @end
