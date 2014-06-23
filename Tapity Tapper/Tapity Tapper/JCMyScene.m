@@ -21,7 +21,6 @@ typedef enum : uint8_t {
     JCColliderTypeRectangle = 1,
     JCColliderTypeObstacle  = 2
 } JCColliderType;
-
 @end
 
 @implementation JCMyScene
