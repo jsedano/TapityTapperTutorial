@@ -1,4 +1,11 @@
-TapityTapperTutorial
+<h1>TapityTapperTutorial</h1>
 ====================
-
-Tapity Tapper is a Flappy Bird Clone for iOS using Sprite Kit, for more information go to http://www.roadtonerdvana.com/2014/04/18/tapity-tapper-my-flappy-bird-clone-using-spritekit/
+Tapity Tapper is a Flappy Bird Clone for iOS using Sprite Kit.
+<h2>Index:</h2> 
+<ol>
+	<li><a title="http://roadtonerdvana.com/2014/04/19/tapity-tapper-my-ios-flappy-bird-clone-using-sprite-kit-getting-started/" href="http://roadtonerdvana.com/2014/04/19/tapity-tapper-my-ios-flappy-bird-clone-using-sprite-kit-getting-started/" target="_blank">Getting Started</a>: Here we begin by <strong>making the Xcode project</strong> and adding a <strong>red rectangle</strong> that will be our <em>bird</em>, and start to play with the <strong>physics engine</strong>.</li>
+	<li><a title="http://roadtonerdvana.com/2014/04/20/tapity-tapper-my-ios-flappy-bird-clone-using-sprite-kit-applying-impulse/" href="http://roadtonerdvana.com/2014/04/20/tapity-tapper-my-ios-flappy-bird-clone-using-sprite-kit-applying-impulse/" target="_blank">Applying Impulse</a>: We know use the physics engine to make the red rectangle <strong><em>jump</em></strong></li>
+	<li><a title="http://roadtonerdvana.com/2014/04/24/tapity-tapper-my-ios-flappy-bird-clone-using-sprite-kit-adding-obstacles/" href="http://roadtonerdvana.com/2014/04/24/tapity-tapper-my-ios-flappy-bird-clone-using-sprite-kit-adding-obstacles/" target="_blank">Adding Obstacles</a>: This game would be so boring without obstacles, so here we add them and <strong>make them go from one side of the screen to the other.</strong></li>
+	<li><a title="http://roadtonerdvana.com/2014/04/28/tapity-tapper-my-ios-flappy-bird-clone-using-sprite-kit-collision-detection/" href="http://roadtonerdvana.com/2014/04/28/tapity-tapper-my-ios-flappy-bird-clone-using-sprite-kit-collision-detection/" target="_blank">Collision Detection</a>: The game is over when an obstacle <em><strong>touches</strong></em> our red rectangle, here we add the necessary stuff to detect collisions.</li>
+	<li><a title="http://roadtonerdvana.com/2014/05/04/tapity-tapper-my-ios-flappy-bird-clone-using-sprite-kit-game-over/" href="http://roadtonerdvana.com/2014/05/04/tapity-tapper-my-ios-flappy-bird-clone-using-sprite-kit-game-over/" target="_blank">Game Over</a>: Here we add a way to start the <strong>game loop</strong> after each game over.</li>
+</ol>
